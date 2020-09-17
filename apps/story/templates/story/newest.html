@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                <h1 class="title">Newest</h1>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-12">
+                <table class="table is-striped is-fullwidth">
+                    <tbody>
+                        {% for story in stories %}
+                            <tr>
+                                <td>{{ forloop.counter }}.</td>
+                                <td>
+                                    <a href="{{ story.url }}" target="_blank">{{ story.title }}</a>
+                                    <p>
+                                        by {{ story.created_by.username }} {{ story.created_at|timesince }} ago | {{ story.number_of_votes }} people have read 
+                                        
+                                        {% if not story.created_by == request.user %}<a href="{% url 'vote' story.id %}"> | Mark as Read</a>{% endif %}
+                                        
+                                    </p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
